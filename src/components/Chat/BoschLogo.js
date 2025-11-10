@@ -1,6 +1,6 @@
 import React from 'react';
 import { Box } from '@mui/material';
-import boschLogo from '../../assets/Bosch-logopng.png';
+import boschLogo from '../../assets/chat-bot.png';
 
 const BoschLogo = ({ size = 24 }) => (
     <Box

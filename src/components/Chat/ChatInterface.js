@@ -20,7 +20,7 @@ import AddIcon from '@mui/icons-material/Add';
 import MenuIcon from '@mui/icons-material/Menu';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Message from './Message';
-import BoschLogo from '../../assets/Bosch-logopng.png';
+import BoschLogo from '../../assets/chat-bot.png';
 import ChatHistoryItem from './ChatHistoryItem';
 import HelpDialog from './HelpDialog';
 import {
@@ -220,18 +220,10 @@ If the input is not a DTC, provide a similar structured response for general car
                         src={BoschLogo}
                         alt="Bosch Logo"
                         style={{
-                            height: '35px',
+                            height: '50px',
+                            width: 'auto',
                         }}
                     />
-                    <Tooltip title="Help">
-                        <IconButton
-                            onClick={() => setHelpOpen(true)}
-                            size="small"
-                            sx={{ ml: 1 }}
-                        >
-                            <HelpOutlineIcon />
-                        </IconButton>
-                    </Tooltip>
                 </Box>
                 <Box
                     sx={{

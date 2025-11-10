@@ -13,7 +13,6 @@ import {
     useTheme,
     Skeleton,
     Zoom,
-    Tooltip,
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import AddIcon from '@mui/icons-material/Add';

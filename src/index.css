@@ -1,0 +1,93 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto',
+        'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+        'Helvetica Neue', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+@layer components {
+    .chat-ai {
+        position: relative;
+    }
+
+    .chat-ai::before {
+        content: '';
+        position: absolute;
+        left: -0.75rem; /* -left-3 */
+        bottom: 1rem; /* bottom-4 */
+        width: 1rem; /* w-4 */
+        height: 1rem; /* h-4 */
+        background-color: var(
+            --surface-50,
+            #f9fafb
+        ); /* bg-surface-50 fallback */
+        border-left: 1px solid var(--surface-200, #e5e7eb); /* border-surface-200 fallback */
+        border-top: 1px solid var(--surface-200, #e5e7eb);
+        transform: rotate(45deg);
+    }
+
+    .chat-user {
+        position: relative;
+    }
+
+    .chat-user::before {
+        content: '';
+        position: absolute;
+        right: 0.5rem; /* -right-2 */
+    }
+
+    .prose {
+        max-width: none;
+    }
+
+    .prose p {
+        margin-top: 0;
+        margin-bottom: 0;
+        line-height: 1.625;
+    }
+
+    .prose ul {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding-left: 1rem;
+    }
+
+    .prose ol {
+        margin-top: 0.5rem;
+        margin-bottom: 0.5rem;
+        padding-left: 1rem;
+    }
+
+    .prose li {
+        margin-bottom: 0.25rem;
+    }
+
+    .prose code {
+        font-size: 0.875rem;
+    }
+
+    .prose pre {
+        margin-top: 0.75rem; /* my-3 */
+        margin-bottom: 0.75rem;
+    }
+
+    .prose h1,
+    .prose h2,
+    .prose h3 {
+        font-weight: 600; /* font-semibold */
+        color: inherit; /* text-inherit */
+        margin-top: 0.5rem; /* my-2 */
+        margin-bottom: 0.5rem;
+    }
+}
+
+code {
+    font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+        monospace;
+}

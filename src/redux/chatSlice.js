@@ -50,6 +50,17 @@ export const chatSlice = createSlice({
                 localStorage.setItem('chats', JSON.stringify(state.chats));
             }
         },
+        addFeedback: (state, action) => {
+            const { chatId, messageIndex, feedback } = action.payload;
+            const chat = state.chats.find((c) => c.id === chatId);
+            if (chat && chat.messages[messageIndex]) {
+                chat.messages[messageIndex].feedback = {
+                    ...feedback,
+                    timestamp: new Date().toISOString(),
+                };
+                localStorage.setItem('chats', JSON.stringify(state.chats));
+            }
+        },
         setLoading: (state, action) => {
             state.isLoading = action.payload;
         },
@@ -70,6 +81,7 @@ export const {
     deleteChat,
     setActiveChatId,
     addMessage,
+    addFeedback,
     setLoading,
     renameChat,
 } = chatSlice.actions;

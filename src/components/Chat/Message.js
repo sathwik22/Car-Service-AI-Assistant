@@ -3,8 +3,9 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import VideoPlayer from './VideoPlayer';
 import BoschLogo from './BoschLogo';
+import FeedbackButtons from './FeedbackButtons';
 
-const Message = ({ message, isLoading }) => {
+const Message = ({ message, isLoading, messageIndex, onFeedbackSubmit }) => {
     const isAI = message.sender === 'ai';
     const [videoPlayer, setVideoPlayer] = useState({
         open: false,
@@ -149,6 +150,14 @@ const Message = ({ message, isLoading }) => {
                         </ReactMarkdown>
                     </div>
 
+                    {/* Feedback Buttons - Only show for AI messages and not during loading */}
+                    {isAI && !isLoading && (
+                        <FeedbackButtons
+                            messageId={message.timestamp}
+                            messageIndex={messageIndex}
+                            onFeedbackSubmit={onFeedbackSubmit}
+                        />
+                    )}
                 </div>
             </div>
             <VideoPlayer

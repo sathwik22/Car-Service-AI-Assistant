@@ -25,6 +25,7 @@ import HelpDialog from './HelpDialog';
 import {
     addChat,
     addMessage,
+    addFeedback,
     deleteChat,
     renameChat,
     setActiveChatId,
@@ -34,6 +35,7 @@ import {
     selectActiveChatId,
     selectIsLoading,
 } from '../../redux/chatSlice';
+import { buildSystemPrompt } from '../../utils/promptBuilder';
 
 const ChatInterface = () => {
     const dispatch = useDispatch();
@@ -60,41 +62,8 @@ const ChatInterface = () => {
             'Content-Type': 'application/json',
         };
 
-        const systemPrompt = `You are an expert AI assistant specializing in troubleshooting Bosch car service related issues and DTCs (Diagnostic Trouble Codes). 
-
-When given an error code or issue, provide a comprehensive response in this format:
-
-1. ERROR CODE MEANING:
-   - Clearly explain what the DTC or issue means
-   - Specify which vehicle systems are affected
-
-2. TOP 5 MOST COMMON CAUSES:
-   - List the 5 most frequent causes of this issue
-   - Include percentage frequency if available (e.g., "35% of cases")
-
-3. DIAGNOSTIC STEPS:
-   - Provide a clear, step-by-step diagnostic process
-   - Include specific test procedures and expected readings
-
-4. TOP 5 VERIFIED SOLUTIONS:
-   - List 5 proven solutions from reputable sources
-   - Order them from most successful to least successful
-   - Include estimated repair time and difficulty level
-   - Mention if special tools are required
-
-5. RELEVANT RESOURCES:
-   - Include links to official Bosch documentation if available
-   - Add relevant YouTube tutorial links with timestamps
-   - Reference Technical Service Bulletins (TSBs) if applicable
-
-6. PREVENTIVE MEASURES:
-   - Suggest maintenance steps to prevent this issue
-   - Include service intervals if applicable
-
-Format YouTube links as complete URLs (e.g., https://www.youtube.com/watch?v=VIDEO_ID).
-Use bullet points for better readability.
-If the input is not a DTC, provide a similar structured response for general car diagnostic queries.`;
-
+        // Build dynamic system prompt based on user preferences
+        const systemPrompt = buildSystemPrompt();
         const payload = {
             model: 'sonar',
             messages: [
@@ -177,6 +146,26 @@ If the input is not a DTC, provide a similar structured response for general car
 
     const handleRename = (chatId, newTitle) => {
         dispatch(renameChat({ chatId, newTitle }));
+    };
+
+    const handleFeedbackSubmit = (feedbackData) => {
+        // Store feedback in Redux state
+        dispatch(
+            addFeedback({
+                chatId: activeChatId,
+                messageIndex: feedbackData.messageIndex,
+                feedback: {
+                    type: feedbackData.type,
+                    selections: feedbackData.selections,
+                },
+            })
+        );
+
+        console.log('Feedback submitted:', feedbackData);
+        console.log(
+            'User preferences updated for next query:',
+            feedbackData.preferences
+        );
     };
 
     return (
@@ -344,12 +333,16 @@ If the input is not a DTC, provide a similar structured response for general car
                                         <div>
                                             <Message
                                                 message={message}
+                                                messageIndex={index}
                                                 isLoading={
                                                     isLoading &&
                                                     index ===
                                                         activeChat.messages
                                                             .length -
                                                             1
+                                                }
+                                                onFeedbackSubmit={
+                                                    handleFeedbackSubmit
                                                 }
                                             />
                                         </div>

@@ -140,8 +140,7 @@ const FeedbackButtons = ({ messageId, messageIndex, onFeedbackSubmit }) => {
                                 fontSize: '0.875rem',
                             }}
                         >
-                            ✅ Thanks! Your feedback will improve future
-                            responses.
+                            Thanks! Your feedback will improve future responses.
                         </Typography>
                     </Fade>
                 )}
@@ -174,8 +173,8 @@ const FeedbackButtons = ({ messageId, messageIndex, onFeedbackSubmit }) => {
                         }}
                     >
                         {feedbackType === 'positive'
-                            ? '✨ What did you like about this response?'
-                            : '💡 Help us improve! What went wrong?'}
+                            ? 'What did you like about this response?'
+                            : 'Help us improve! What went wrong?'}
                     </Typography>
 
                     <FormGroup>

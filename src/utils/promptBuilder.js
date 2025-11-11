@@ -1,6 +1,6 @@
 // Dynamic Prompt Builder based on user preferences and feedback
 
-import { basePromptSections, feedbackOptionMapping } from './promptConfig';
+import { basePromptSections } from './promptConfig';
 
 // Default user preferences
 export const defaultPreferences = {

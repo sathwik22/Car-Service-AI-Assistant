@@ -267,7 +267,7 @@ export const feedbackOptionMapping = {
 };
 
 export const positiveOptions = [
-    { id: 'perfect_length', label: '⭐ Perfect length and detail', icon: '⭐' },
+    { id: 'perfect_length', label: 'Perfect length and detail', icon: '' },
     {
         id: 'technical_accuracy',
         label: 'Technical accuracy was excellent',

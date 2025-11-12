@@ -10,6 +10,8 @@ Keep responses CONCISE and focused:
 2. TOP 3 MOST COMMON CAUSES (brief bullets)
 3. QUICK DIAGNOSTIC STEPS (3-5 steps)
 4. TOP 3 SOLUTIONS (prioritize most common)
+   - Briefly explain each solution
+   - Include estimated repair time and difficulty
 5. KEY RESOURCES (2-3 most relevant links)
 
 Keep responses under 400 words. Be direct and actionable.`,
@@ -30,10 +32,13 @@ Provide a comprehensive response in this format:
    - Include specific test procedures and expected readings
 
 4. TOP 5 VERIFIED SOLUTIONS:
+   - Format each solution as: "1. Solution Title (Success rate: XX%)"
    - List 5 proven solutions from reputable sources
    - Order them from most successful to least successful
+   - For each solution, explain HOW it fixes the problem and WHY it works
    - Include estimated repair time and difficulty level
    - Mention if special tools are required
+   - DO NOT use "Solution 1:", "Solution 2:" format - use "1.", "2.", "3." etc.
 
 5. RELEVANT RESOURCES:
    - Include links to official Bosch documentation if available
@@ -67,11 +72,15 @@ Provide an EXTREMELY DETAILED response:
    - Include alternative diagnostic methods
 
 4. TOP 5 VERIFIED SOLUTIONS (with extensive detail):
+   - Format each solution as: "1. Solution Title (Success rate: XX%)"
    - Detailed repair procedures for each solution
+   - Explain thoroughly HOW each solution fixes the problem and WHY it works
+   - Include the technical reasoning behind each solution
    - Parts specifications and part numbers
    - Estimated repair time and difficulty level
    - Cost estimates for parts and labor
    - Special tools and equipment needed
+   - DO NOT use "Solution 1:", "Solution 2:" format - use "1.", "2.", "3." etc.
 
 5. EXTENSIVE RESOURCES:
    - Multiple official Bosch documentation links

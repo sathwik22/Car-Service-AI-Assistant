@@ -232,9 +232,9 @@ const FeedbackButtons = ({ messageId, messageIndex, onFeedbackSubmit }) => {
                                         ? 'success.dark'
                                         : 'warning.dark',
                             },
-                            '&:disabled': {
-                                backgroundColor: 'grey.300',
-                                color: 'grey.500',
+                            '&.Mui-disabled': {
+                                backgroundColor: 'rgba(0, 0, 0, 0.12)',
+                                color: 'rgba(0, 0, 0, 0.5)',
                             },
                         }}
                     >

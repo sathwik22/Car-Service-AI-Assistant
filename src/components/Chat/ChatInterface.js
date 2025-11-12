@@ -87,7 +87,10 @@ const ChatInterface = () => {
             }
 
             const data = await response.json();
-            return data.choices[0].message.content;
+            // Remove citation markers [1], [2], etc. from the response
+            const content = data.choices[0].message.content;
+            const cleanedContent = content.replace(/\[\d+\]/g, '');
+            return cleanedContent;
         } catch (error) {
             console.error('Error calling Perplexity API:', error);
             return 'Sorry, I encountered an error processing your request. Please try again.';
@@ -296,15 +299,21 @@ const ChatInterface = () => {
                 {isMobile && (
                     <Box
                         sx={{
-                            p: 1,
+                            p: 2,
                             borderBottom: 1,
                             borderColor: 'grey.200',
                             bgcolor: 'background.paper',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: 1,
                         }}
                     >
                         <IconButton onClick={() => setDrawerOpen(true)}>
                             <MenuIcon />
                         </IconButton>
+                        <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                            BCS AI Assistant
+                        </Typography>
                     </Box>
                 )}
 

@@ -212,6 +212,7 @@ const ChatInterface = () => {
                             width: 'auto',
                         }}
                     />
+                    BCS AI Assistant
                 </Box>
                 <Box
                     sx={{

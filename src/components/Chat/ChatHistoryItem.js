@@ -8,24 +8,48 @@ import {
     Tooltip,
     TextField,
     Box,
+    Menu,
+    MenuItem,
 } from '@mui/material';
 import ChatIcon from '@mui/icons-material/Chat';
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline';
 import EditIcon from '@mui/icons-material/Edit';
 import DoneIcon from '@mui/icons-material/Done';
 import CloseIcon from '@mui/icons-material/Close';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
-const ChatHistoryItem = ({ chat, onSelect, onDelete, onRename, isSelected }) => {
+const ChatHistoryItem = ({
+    chat,
+    onSelect,
+    onDelete,
+    onRename,
+    isSelected,
+}) => {
     const [isEditing, setIsEditing] = useState(false);
     const [editedTitle, setEditedTitle] = useState(chat.title || 'New Chat');
+    const [anchorEl, setAnchorEl] = useState(null);
+    const menuOpen = Boolean(anchorEl);
+
+    const handleMenuOpen = (e) => {
+        e.stopPropagation();
+        setAnchorEl(e.currentTarget);
+    };
+
+    const handleMenuClose = (e) => {
+        if (e) e.stopPropagation();
+        setAnchorEl(null);
+    };
 
     const handleDelete = (e) => {
         e.stopPropagation();
+        handleMenuClose();
         onDelete(chat.id);
     };
 
     const handleEditClick = (e) => {
         e.stopPropagation();
+        handleMenuClose();
+        setEditedTitle(chat.title || 'New Chat');
         setIsEditing(true);
     };
 
@@ -48,9 +72,6 @@ const ChatHistoryItem = ({ chat, onSelect, onDelete, onRename, isSelected }) => 
             disablePadding
             sx={{
                 mb: 0.5,
-                '&:hover .MuiIconButton-root': {
-                    opacity: 1,
-                },
             }}
             secondaryAction={
                 <Box sx={{ display: 'flex' }}>
@@ -81,40 +102,66 @@ const ChatHistoryItem = ({ chat, onSelect, onDelete, onRename, isSelected }) => 
                         </>
                     ) : (
                         <>
-                            <Tooltip title="Rename chat">
-                                <IconButton
+                            <IconButton
+                                onClick={handleMenuOpen}
+                                sx={{
+                                    color: 'grey.500',
+                                    '&:hover': {
+                                        color: 'primary.main',
+                                        bgcolor: 'rgba(0, 86, 145, 0.08)',
+                                    },
+                                }}
+                            >
+                                <MoreVertIcon />
+                            </IconButton>
+                            <Menu
+                                anchorEl={anchorEl}
+                                open={menuOpen}
+                                onClose={handleMenuClose}
+                                onClick={(e) => e.stopPropagation()}
+                                anchorOrigin={{
+                                    vertical: 'bottom',
+                                    horizontal: 'right',
+                                }}
+                                transformOrigin={{
+                                    vertical: 'top',
+                                    horizontal: 'right',
+                                }}
+                                PaperProps={{
+                                    sx: {
+                                        boxShadow: '0 2px 8px rgba(0,0,0,0.15)',
+                                        minWidth: 140,
+                                    },
+                                }}
+                            >
+                                <MenuItem
                                     onClick={handleEditClick}
                                     sx={{
-                                        color: 'grey.500',
-                                        opacity: 0,
-                                        transition: '0.2s',
-                                        mr: 0.5,
+                                        fontSize: '0.875rem',
+                                        gap: 1,
                                         '&:hover': {
-                                            color: 'primary.main',
-                                            bgcolor: 'primary.light',
+                                            bgcolor: 'rgba(0, 86, 145, 0.08)',
                                         },
                                     }}
                                 >
-                                    <EditIcon />
-                                </IconButton>
-                            </Tooltip>
-                            <Tooltip title="Delete chat">
-                                <IconButton
-                                    edge="end"
+                                    <EditIcon fontSize="small" />
+                                    Rename
+                                </MenuItem>
+                                <MenuItem
                                     onClick={handleDelete}
                                     sx={{
-                                        color: 'grey.500',
-                                        opacity: 0,
-                                        transition: '0.2s',
+                                        fontSize: '0.875rem',
+                                        gap: 1,
+                                        color: 'error.main',
                                         '&:hover': {
-                                            color: 'error.main',
-                                            bgcolor: 'error.light',
+                                            bgcolor: 'rgba(211, 47, 47, 0.08)',
                                         },
                                     }}
                                 >
-                                    <DeleteOutlineIcon />
-                                </IconButton>
-                            </Tooltip>
+                                    <DeleteOutlineIcon fontSize="small" />
+                                    Delete
+                                </MenuItem>
+                            </Menu>
                         </>
                     )}
                 </Box>

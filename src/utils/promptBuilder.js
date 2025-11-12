@@ -213,10 +213,19 @@ export const buildSystemPrompt = (userPreferences = null) => {
             '\n\n' + basePromptSections.relevanceFocus[prefs.relevanceFocus];
     }
 
-    // Add formatting guidelines
-    prompt += `\n\nFormat YouTube links as complete URLs (e.g., https://www.youtube.com/watch?v=VIDEO_ID).
-Use bullet points for better readability.
-If the input is not a DTC, provide a similar structured response for general car diagnostic queries.`;
+    // Add formatting guidelines and context awareness
+    prompt += `\n\nFORMAT GUIDELINES:
+- Format YouTube links as complete URLs (e.g., https://www.youtube.com/watch?v=VIDEO_ID)
+- Use bullet points for better readability
+- For general car diagnostic queries (not DTCs), provide a similar structured response
+
+CONTEXT AWARENESS - IMPORTANT:
+- If the user sends a casual greeting (Hi, Hello, Hey, etc.) or general chat, respond naturally and briefly like a friendly assistant
+- Examples of casual responses:
+  * "Hi! I'm here to help with any car service questions or diagnostic codes you might have. What can I assist you with today?"
+  * "Hello! Need help with a DTC code or car problem?"
+- Only use the detailed technical format for actual car service questions, DTC codes, or error codes
+- If unsure what the user needs, ask them conversationally what they'd like help with`;
 
     return prompt;
 };

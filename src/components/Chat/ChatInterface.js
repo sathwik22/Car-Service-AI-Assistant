@@ -207,7 +207,7 @@ const ChatInterface = () => {
                         borderColor: 'grey.200',
                         bgcolor: 'background.paper',
                         display: 'flex',
-                        justifyContent: 'space-between',
+                        justifyContent: 'flex-start ',
                         alignItems: 'center',
                     }}
                 >

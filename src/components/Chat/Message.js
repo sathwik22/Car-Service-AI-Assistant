@@ -2,7 +2,6 @@ import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import VideoPlayer from './VideoPlayer';
-import BoschLogo from './BoschLogo';
 import FeedbackButtons from './FeedbackButtons';
 
 const Message = ({ message, isLoading, messageIndex, onFeedbackSubmit }) => {
@@ -72,18 +71,6 @@ const Message = ({ message, isLoading, messageIndex, onFeedbackSubmit }) => {
                 isAI ? 'justify-start' : 'justify-end'
             } mb-8 w-full group`}
         >
-            {isAI && (
-                <div className="mr-4 mb-1 flex-shrink-0">
-                    <div
-                        className="rounded-xl bg-gradient-to-r from-accent-primary to-accent-secondary p-1.5 shadow-lg 
-                        transform transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-xl"
-                    >
-                        <div className="bg-white rounded-lg p-1">
-                            <BoschLogo size={24} />
-                        </div>
-                    </div>
-                </div>
-            )}
             <div
                 className={`relative max-w-[80%] md:max-w-[85%] ${
                     isAI ? 'chat-ai' : 'chat-user'

@@ -114,7 +114,8 @@ const ChatInterface = () => {
     };
 
     const handleSend = async () => {
-        if (input.trim() && activeChatId) {
+        // Prevent sending if already loading or input is empty
+        if (input.trim() && activeChatId && !isLoading) {
             const userMessage = {
                 text: input.trim(),
                 sender: 'user',
@@ -143,7 +144,10 @@ const ChatInterface = () => {
     const handleKeyPress = (e) => {
         if (e.key === 'Enter' && !e.shiftKey) {
             e.preventDefault();
-            handleSend();
+            // Don't send if already loading or input is empty
+            if (!isLoading && input.trim()) {
+                handleSend();
+            }
         }
     };
 
@@ -479,7 +483,11 @@ const ChatInterface = () => {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyPress={handleKeyPress}
-                                placeholder="Enter a DTC code or describe the issue..."
+                                placeholder={
+                                    isLoading
+                                        ? 'Please wait while processing your request...'
+                                        : 'Enter a DTC code or describe the issue...'
+                                }
                                 variant="standard"
                                 InputProps={{
                                     disableUnderline: true,

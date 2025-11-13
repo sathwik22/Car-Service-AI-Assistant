@@ -88,9 +88,11 @@ const ChatInterface = () => {
             }
 
             const data = await response.json();
+
             // Remove citation markers [1], [2], etc. from the response
             const content = data.choices[0].message.content;
             const cleanedContent = content.replace(/\[\d+\]/g, '');
+            console.log('cleanedContent', cleanedContent);
             return cleanedContent;
         } catch (error) {
             console.error('Error calling Perplexity API:', error);
@@ -386,32 +388,51 @@ const ChatInterface = () => {
                     {activeChat ? (
                         activeChat.messages.length > 0 ? (
                             <>
-                                {activeChat.messages.map((message, index) => (
-                                    <Zoom
-                                        in={true}
-                                        key={index}
-                                        style={{
-                                            transitionDelay: `${index * 100}ms`,
-                                        }}
-                                    >
-                                        <div>
-                                            <Message
-                                                message={message}
-                                                messageIndex={index}
-                                                isLoading={
-                                                    isLoading &&
-                                                    index ===
-                                                        activeChat.messages
-                                                            .length -
-                                                            1
-                                                }
-                                                onFeedbackSubmit={
-                                                    handleFeedbackSubmit
-                                                }
-                                            />
-                                        </div>
-                                    </Zoom>
-                                ))}
+                                {activeChat.messages.map((message, index) => {
+                                    // Find the user query for this AI response
+                                    let userQuery = '';
+                                    if (message.sender === 'ai' && index > 0) {
+                                        // Get the previous user message
+                                        const previousMessage =
+                                            activeChat.messages[index - 1];
+                                        if (
+                                            previousMessage &&
+                                            previousMessage.sender === 'user'
+                                        ) {
+                                            userQuery = previousMessage.text;
+                                        }
+                                    }
+
+                                    return (
+                                        <Zoom
+                                            in={true}
+                                            key={index}
+                                            style={{
+                                                transitionDelay: `${
+                                                    index * 100
+                                                }ms`,
+                                            }}
+                                        >
+                                            <div>
+                                                <Message
+                                                    message={message}
+                                                    messageIndex={index}
+                                                    userQuery={userQuery}
+                                                    isLoading={
+                                                        isLoading &&
+                                                        index ===
+                                                            activeChat.messages
+                                                                .length -
+                                                                1
+                                                    }
+                                                    onFeedbackSubmit={
+                                                        handleFeedbackSubmit
+                                                    }
+                                                />
+                                            </div>
+                                        </Zoom>
+                                    );
+                                })}
                                 {isLoading && (
                                     <Box
                                         sx={{

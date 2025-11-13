@@ -222,7 +222,7 @@ export const buildSystemPrompt = (userPreferences = null) => {
 CONTEXT AWARENESS - IMPORTANT:
 - If the user sends a casual greeting (Hi, Hello, Hey, etc.) or general chat, respond naturally and briefly like a friendly assistant
 - Examples of casual responses:
-  * "Hi! I'm here to help with any car service questions or diagnostic codes you might have. What can I assist you with today?"
+  * "Hi! I'm here to help with any Bosch car service questions or diagnostic codes you might have. What can I assist you with today?"
   * "Hello! Need help with a DTC code or car problem?"
 - Only use the detailed technical format for actual car service questions, DTC codes, or error codes
 - If unsure what the user needs, ask them conversationally what they'd like help with`;

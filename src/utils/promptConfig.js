@@ -13,9 +13,16 @@ IMPORTANT INSTRUCTIONS:
         concise: `
 Keep responses CONCISE and focused:
 1. ERROR CODE MEANING (2-3 sentences max)
-2. TOP 3 MOST COMMON CAUSES (brief bullets)
+2. TOP 5 MOST COMMON CAUSES (brief bullets)
 3. QUICK DIAGNOSTIC STEPS (3-5 steps)
-4. TOP 3 SOLUTIONS (prioritize most common)
+4. TOP 5 SOLUTIONS (prioritize most common)
+   - CRITICAL FORMAT: Each solution MUST follow this exact format:
+     1. [SOLUTION] Solution Title (Success rate: XX%)
+   - IMPORTANT RULES:
+     * The [SOLUTION] marker MUST come immediately after the number and period
+     * Do NOT wrap the title in bold markers (**) or any other formatting
+     * Do NOT put [SOLUTION] inside the content, only at the start of each solution line
+     * Use plain text for the solution title
    - Briefly explain each solution
    - Include estimated repair time and difficulty
 5. KEY RESOURCES (2-3 most relevant links)
@@ -38,13 +45,22 @@ Provide a comprehensive response in this format:
    - Include specific test procedures and expected readings
 
 4. TOP 5 VERIFIED SOLUTIONS:
-   - Format each solution as: "1. Solution Title (Success rate: XX%)"
+   - CRITICAL FORMAT: Each solution MUST follow this exact format:
+     1. [SOLUTION] Solution Title (Success rate: XX%)
+   - IMPORTANT RULES:
+     * The [SOLUTION] marker MUST come immediately after the number and period
+     * Do NOT wrap the title in bold markers (**) or any other formatting
+     * Do NOT put [SOLUTION] inside the content, only at the start of each solution line
+     * Use plain text for the solution title
+   - Example correct format:
+     1. [SOLUTION] Replace Drive Motor Inverter Temperature Sensor F (Success rate: 75%)
+        - Details and explanation go here in bullet points
+        - More details here
    - List 5 proven solutions from reputable sources
    - Order them from most successful to least successful
    - For each solution, explain HOW it fixes the problem and WHY it works
    - Include estimated repair time and difficulty level
    - Mention if special tools are required
-   - DO NOT use "Solution 1:", "Solution 2:" format - use "1.", "2.", "3." etc.
 
 5. RELEVANT RESOURCES:
    - Include links to official Bosch documentation if available
@@ -78,7 +94,16 @@ Provide an EXTREMELY DETAILED response:
    - Include alternative diagnostic methods
 
 4. TOP 5 VERIFIED SOLUTIONS (with extensive detail):
-   - Format each solution as: "1. Solution Title (Success rate: XX%)"
+   - CRITICAL FORMAT: Each solution MUST follow this exact format:
+     1. [SOLUTION] Solution Title (Success rate: XX%)
+   - IMPORTANT RULES:
+     * The [SOLUTION] marker MUST come immediately after the number and period
+     * Do NOT wrap the title in bold markers (**) or any other formatting
+     * Do NOT put [SOLUTION] inside the content, only at the start of each solution line
+     * Use plain text for the solution title
+   - Example correct format:
+     1. [SOLUTION] Replace Fuel Pump Driver Module FPDM (Success rate: 85%)
+        - Details and explanation go here
    - Detailed repair procedures for each solution
    - Explain thoroughly HOW each solution fixes the problem and WHY it works
    - Include the technical reasoning behind each solution
@@ -86,7 +111,6 @@ Provide an EXTREMELY DETAILED response:
    - Estimated repair time and difficulty level
    - Cost estimates for parts and labor
    - Special tools and equipment needed
-   - DO NOT use "Solution 1:", "Solution 2:" format - use "1.", "2.", "3." etc.
 
 5. EXTENSIVE RESOURCES:
    - Multiple official Bosch documentation links

@@ -32,6 +32,11 @@ export const storeFeedback = async (feedbackData) => {
             timestamp: new Date().toISOString(),
             chatId: feedbackData.chatId || null,
             messageIndex: feedbackData.messageIndex || null,
+            // Solution-specific feedback fields
+            feedbackContext: feedbackData.feedbackContext || 'general', // 'general' or 'solution-specific'
+            solutionNumber: feedbackData.solutionNumber || null,
+            solutionTitle: feedbackData.solutionTitle || null,
+            solutionContent: feedbackData.solutionContent || null,
             // Optional: Add session ID or user ID if you have authentication
             sessionId: getSessionId(),
         };
@@ -113,6 +118,112 @@ export const getFeedbackStats = async () => {
         return stats;
     } catch (error) {
         console.error('Error calculating feedback stats:', error);
+        throw error;
+    }
+};
+
+/**
+ * Store solution-specific feedback in a separate collection
+ * @param {Object} feedbackData - The solution feedback data to store
+ * @returns {Promise<string>} - The document ID of the stored feedback
+ */
+export const storeSolutionFeedback = async (feedbackData) => {
+    try {
+        const solutionFeedbackCollection = collection(db, 'solutionFeedbacks');
+
+        const feedbackDoc = {
+            userQuery: feedbackData.userQuery,
+            aiResponse: feedbackData.aiResponse,
+            solutionNumber: feedbackData.solutionNumber,
+            solutionTitle: feedbackData.solutionTitle,
+            solutionContent: feedbackData.solutionContent,
+            type: feedbackData.type, // 'positive' or 'negative'
+            feedbackContext: 'solution-specific',
+            timestamp: feedbackData.timestamp || new Date().toISOString(),
+            messageIndex: feedbackData.messageIndex || null,
+            sessionId: getSessionId(),
+        };
+
+        const docRef = await addDoc(solutionFeedbackCollection, feedbackDoc);
+        console.log(
+            'Solution feedback stored successfully with ID:',
+            docRef.id
+        );
+        return docRef.id;
+    } catch (error) {
+        console.error('Error storing solution feedback:', error);
+        throw error;
+    }
+};
+
+/**
+ * Retrieve all solution feedbacks
+ * @param {number} maxResults - Maximum number of results to return
+ * @returns {Promise<Array>} - Array of solution feedback documents
+ */
+export const getAllSolutionFeedbacks = async (maxResults = 100) => {
+    try {
+        const solutionFeedbackCollection = collection(db, 'solutionFeedbacks');
+        const q = query(
+            solutionFeedbackCollection,
+            orderBy('timestamp', 'desc'),
+            limit(maxResults)
+        );
+
+        const querySnapshot = await getDocs(q);
+        const feedbacks = [];
+
+        querySnapshot.forEach((doc) => {
+            feedbacks.push({
+                id: doc.id,
+                ...doc.data(),
+            });
+        });
+
+        return feedbacks;
+    } catch (error) {
+        console.error('Error retrieving solution feedbacks:', error);
+        throw error;
+    }
+};
+
+/**
+ * Get solution feedback statistics
+ * @returns {Promise<Object>} - Solution feedback statistics
+ */
+export const getSolutionFeedbackStats = async () => {
+    try {
+        const feedbacks = await getAllSolutionFeedbacks();
+
+        const stats = {
+            total: feedbacks.length,
+            positive: feedbacks.filter((f) => f.type === 'positive').length,
+            negative: feedbacks.filter((f) => f.type === 'negative').length,
+            bySolution: {},
+            recentFeedbacks: feedbacks.slice(0, 10),
+        };
+
+        // Group by solution title
+        feedbacks.forEach((feedback) => {
+            const title = feedback.solutionTitle || 'Unknown';
+            if (!stats.bySolution[title]) {
+                stats.bySolution[title] = {
+                    total: 0,
+                    positive: 0,
+                    negative: 0,
+                };
+            }
+            stats.bySolution[title].total++;
+            if (feedback.type === 'positive') {
+                stats.bySolution[title].positive++;
+            } else if (feedback.type === 'negative') {
+                stats.bySolution[title].negative++;
+            }
+        });
+
+        return stats;
+    } catch (error) {
+        console.error('Error calculating solution feedback stats:', error);
         throw error;
     }
 };

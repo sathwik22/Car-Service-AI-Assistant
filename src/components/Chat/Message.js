@@ -59,8 +59,6 @@ const Message = ({
     // Handle solution-specific feedback
     const handleSolutionFeedback = async (solution, feedbackType) => {
         try {
-            const feedbackKey = `${solution.number}_${feedbackType}`;
-
             // Update local state to show feedback was given
             setSolutionFeedback((prev) => ({
                 ...prev,

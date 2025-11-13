@@ -1,7 +1,9 @@
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material';
 import { Provider } from 'react-redux';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import store from './redux/store';
 import ChatInterface from './components/Chat/ChatInterface';
+import FeedbackDashboard from './components/Admin/FeedbackDashboard';
 
 const theme = createTheme({
     palette: {
@@ -106,7 +108,15 @@ function App() {
         <Provider store={store}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <ChatInterface />
+                <BrowserRouter>
+                    <Routes>
+                        <Route path="/" element={<ChatInterface />} />
+                        <Route
+                            path="/admin/feedback"
+                            element={<FeedbackDashboard />}
+                        />
+                    </Routes>
+                </BrowserRouter>
             </ThemeProvider>
         </Provider>
     );

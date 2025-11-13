@@ -36,6 +36,7 @@ import {
     selectIsLoading,
 } from '../../redux/chatSlice';
 import { buildSystemPrompt } from '../../utils/promptBuilder';
+import { storeFeedback } from '../../services/feedbackService';
 
 const ChatInterface = () => {
     const dispatch = useDispatch();
@@ -155,24 +156,73 @@ const ChatInterface = () => {
         dispatch(renameChat({ chatId, newTitle }));
     };
 
-    const handleFeedbackSubmit = (feedbackData) => {
-        // Store feedback in Redux state
-        dispatch(
-            addFeedback({
-                chatId: activeChatId,
-                messageIndex: feedbackData.messageIndex,
-                feedback: {
-                    type: feedbackData.type,
-                    selections: feedbackData.selections,
-                },
-            })
-        );
+    const handleFeedbackSubmit = async (feedbackData) => {
+        try {
+            // Get the corresponding messages from the chat
+            const chat = chats.find((c) => c.id === activeChatId);
+            if (!chat) return;
 
-        console.log('Feedback submitted:', feedbackData);
-        console.log(
-            'User preferences updated for next query:',
-            feedbackData.preferences
-        );
+            // Get user query and AI response for this message
+            const messageIndex = feedbackData.messageIndex;
+            let userQuery = '';
+            let aiResponse = '';
+
+            // Find the user message and AI response pair
+            if (messageIndex > 0) {
+                // The AI message is at messageIndex, user message is likely before it
+                const aiMessage = chat.messages[messageIndex];
+                const userMessage = chat.messages[messageIndex - 1];
+
+                if (userMessage && userMessage.sender === 'user') {
+                    userQuery = userMessage.text;
+                }
+                if (aiMessage && aiMessage.sender === 'ai') {
+                    aiResponse = aiMessage.text;
+                }
+            }
+
+            // Store feedback in Redux state (for local UI updates)
+            dispatch(
+                addFeedback({
+                    chatId: activeChatId,
+                    messageIndex: feedbackData.messageIndex,
+                    feedback: {
+                        type: feedbackData.type,
+                        selections: feedbackData.selections,
+                    },
+                })
+            );
+
+            // Store feedback globally in Firebase
+            const feedbackToStore = {
+                ...feedbackData,
+                userQuery,
+                aiResponse,
+                chatId: activeChatId,
+            };
+
+            await storeFeedback(feedbackToStore);
+
+            console.log(
+                'Feedback submitted and stored globally:',
+                feedbackData
+            );
+            console.log('User query:', userQuery);
+            console.log('AI response:', aiResponse);
+        } catch (error) {
+            console.error('Error submitting feedback:', error);
+            // Still store locally even if Firebase fails
+            dispatch(
+                addFeedback({
+                    chatId: activeChatId,
+                    messageIndex: feedbackData.messageIndex,
+                    feedback: {
+                        type: feedbackData.type,
+                        selections: feedbackData.selections,
+                    },
+                })
+            );
+        }
     };
 
     return (

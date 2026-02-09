@@ -1,4 +1,4 @@
-# Bosch Car Service AI Assistant
+# Car Service AI Assistant
 
 An intelligent diagnostic assistant that helps users troubleshoot vehicle issues and interpret DTC (Diagnostic Trouble Code) errors using AI-powered responses with adaptive learning from user feedback.
 
@@ -97,7 +97,7 @@ Each response includes:
 -   Interprets DTC codes with detailed explanations
 -   Provides percentage-based frequency of common causes
 -   Includes estimated repair times and difficulty levels
--   Links to official Bosch documentation and relevant resources
+-   Links to official documentation and relevant resources
 -   Offers preventive maintenance suggestions
 
 ### Technical Features
@@ -304,7 +304,7 @@ The system can adjust 6 different aspects of responses:
 
     -   Green background for positive feedback panel
     -   Orange background for negative feedback panel
-    -   Bosch blue for submit buttons
+    -   blue for submit buttons
 
 -   **Visual States**:
 
@@ -422,12 +422,8 @@ This approach ensures stable, intelligent learning from user behavior patterns!
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## License
-
-Copyright © 2025 Bosch. All rights reserved.
-
 ## Acknowledgments
 
--   Bosch Car Service for automotive expertise
+- Car Service for automotive expertise
 -   Perplexity AI for natural language processing capabilities
 -   Material-UI team for the component library
